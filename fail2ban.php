@@ -57,13 +57,14 @@ function create_txt() {
 	$html=null;
 	$stmt=$db->query("SELECT `1`, `2`, `3`, `4` from fail2ban order by `1`, `2`, `3`, `4`");
 	while ($i=$stmt->fetch(PDO::FETCH_ASSOC)) {
-		$html.=$i['1'].'.'.$i['2'].'.'.$i['3'].'.'.$i['4'].'
-';
+		$html.=$i['1'].'.'.$i['2'].'.'.$i['3'].'.'.$i['4'].'/32
+';	
 	}
 	header('Content-Type:text/plain');
 	header('Content-Length: ' . strlen($html));
 	header('Content-Transfer-Encoding: binary');
 	header('Cache-Control: must-revalidate');
 	header('Pragma: public');
-	file_put_contents('/var/www/mydomain.com/badips.txt', $html);
+	file_put_contents('/temp/badips.txt', $html);
+	shell_exec('/usr/bin/aggregate </temp/badips.txt >/var/www/mydomain.be/badips.txt');
 }
