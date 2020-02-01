@@ -71,3 +71,14 @@ Add a cron job for the script:
 
 ## Conclusion
 With this setup intrusions of bad ip addresses are blocked instantly by fail2ban on the affected server and also on all other server within one minute. The scripts are now running for about three months and my table already holds 1500 records.
+## Warning
+These scripts do a permanent ban. Unbanning must be done by manually deleting the ip address from the table and remove it from the routing table:
+```shell
+ip route del blackhole 1.2.3.4
+```
+Of course you could create a PHP page to view and delete them, for example blockedips.php.
+If you like to have the ip addresses removed automatically when fail2ban unbans you can add this to the unban action:
+```
+actionunban   = ip route delete <blocktype> <ip> 
+              curl -s "https://mydomain.com/fail2ban.php?token=FJ3U66DHEK6HUCETkoF6kt9cyrv5sZozCmNyN9CRJsfyFsQsXr&action=delete&ip=<ip>"
+  ```
