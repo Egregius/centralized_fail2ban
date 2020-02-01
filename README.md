@@ -41,3 +41,7 @@ Add a second line to your existing ban action, for example:
 actionban   = ip route add <blocktype> <ip> 
               curl -s "https://mydomain.com/fail2ban.php?token=FJ3U66DHEK6HUCETkoF6kt9cyrv5sZozCmNyN9CRJsfyFsQsXr&action=add&source=myfirstserver&reason=<name>&ip=<ip>"
   ```
+### fail2ban.php
+place this file on the webserver that you'll use to manage the fail2ban database. This file accepts the requests from the different servers to add an ip address to the database. It also creates a txt file with the complete list of addresses to ban.
+### fail2ban.sh
+This script fetches to txt file and adds a ip route blackhole for each of them
