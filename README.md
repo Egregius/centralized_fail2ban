@@ -44,4 +44,8 @@ actionban   = ip route add <blocktype> <ip>
 ### fail2ban.php
 place this file on the webserver that you'll use to manage the fail2ban database. This file accepts the requests from the different servers to add an ip address to the database. It also creates a txt file with the complete list of addresses to ban.
 ### fail2ban.sh
-This script fetches to txt file and adds a ip route blackhole for each of them
+This script fetches to txt file and adds a ip route blackhole for each of them. Execute it by cron on every server you want to protect that isn't behind pfSense.
+```
+* * * * * /usr/bin/nice -n20 /path/fail2ban.sh >/dev/null 2>&1
+```
+### pfSense
