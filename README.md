@@ -53,3 +53,15 @@ Add a url alias:
 ![pfSense-url-alias.png](https://egregius.be/files/github/pfSense-url-alias.png)
 And create a firewall rule for it:
 ![pfSense-url-alias.png](https://egregius.be/files/github/pfSense-firewall-rule.png)
+url aliases are only updated twice a day by default. Therefor add a cron job to update it more frequently. I didn't notice any downside of having it running every minute yet.
+![pfSense-url-alias.png](https://egregius.be/files/github/pfSense-cron.png)
+
+### 3CX Voip
+3CX has it's own intrusion detection. It stores them in a PostgreSQL database. Let's fetch that to grab the ip addresses.
+Add a cron job for the script:
+```
+* * * * * /usr/bin/nice -n20 /path/fail2ban3CX.sh >/dev/null 2>&1
+```
+
+## Conclusion
+With this setup intrusions of bad ip addresses are blocked instantly by fail2ban on the affected server and also on all other server within one minute. The scripts are now running for about three months and my table already holds 1500 records.
