@@ -6,10 +6,12 @@ The one problem I had with fail2ban is that it's has a local database.I manage s
 
 ## Goals
 Create a centralized database with bad ip's so those can be blocked on multiple servers. The servers I manage are different types. One is just a plain Apache2 webserver on Debian, some others are webservers behind HAProxy on pfSense and another is a 3CX Voip server. 
+
 ## Requirements
 fail2ban running with configured jails
 PHP enabled webserver
 MySQL server
+
 ## Installation
 ### Database
 Create a table in a database:
@@ -41,13 +43,16 @@ Add a second line to your existing ban action, for example:
 actionban   = ip route add <blocktype> <ip> 
               curl -s "https://mydomain.com/fail2ban.php?token=FJ3U66DHEK6HUCETkoF6kt9cyrv5sZozCmNyN9CRJsfyFsQsXr&action=add&source=myfirstserver&reason=<name>&ip=<ip>"
   ```
+
 ### fail2ban.php
 place this file on the webserver that you'll use to manage the fail2ban database. This file accepts the requests from the different servers to add an ip address to the database. It also creates a txt file with the complete list of addresses to ban.
+
 ### fail2ban.sh
 This script fetches to txt file and adds a ip route blackhole for each of them. Execute it by cron on every server you want to protect that isn't behind pfSense.
 ```
 * * * * * /usr/bin/nice -n20 /path/fail2ban.sh >/dev/null 2>&1
 ```
+
 ### pfSense
 Add a url alias:
 ![pfSense-url-alias.png](https://egregius.be/files/github/pfSense-url-alias.png)
@@ -62,6 +67,7 @@ Add a cron job for the script:
 ```
 * * * * * /usr/bin/nice -n20 /path/fail2ban3CX.sh >/dev/null 2>&1
 ```
+> 3CX is new to me, for now I only grab entrytype 2, maybe others are needed. I'll update the file once I notice that.
 
 ## Conclusion
 With this setup intrusions of bad ip addresses are blocked instantly by fail2ban on the affected server and also on all other server within one minute. The scripts are now running for about three months and my table already holds 1500 records.
