@@ -11,6 +11,7 @@ Create a centralized database with bad ip's so those can be blocked on multiple 
 fail2ban running with configured jails
 PHP enabled webserver
 MySQL server
+aggregate
 
 ## Installation
 ### Database
@@ -45,7 +46,8 @@ actionban   = ip route add <blocktype> <ip>
   ```
 
 ### fail2ban.php
-place this file on the webserver that you'll use to manage the fail2ban database. This file accepts the requests from the different servers to add an ip address to the database. It also creates a txt file with the complete list of addresses to ban.
+place this file on the webserver that you'll use to manage the fail2ban database. This file accepts the requests from the different servers to add an ip address to the database. It also creates a txt file with the complete list of addresses to ban. This list is aggregated into CIDR ranges to minimize the length.
+URL aliases are limited to 3000 addresses. Once I hit that limit I'll make a workaround for it by splitting the txt file in multiple.
 
 ### fail2ban.sh
 This script fetches to txt file and adds a ip route blackhole for each of them. Execute it by cron on every server you want to protect that isn't behind pfSense.
@@ -58,7 +60,7 @@ Add a url alias:
 ![pfSense-url-alias.png](https://egregius.be/files/github/pfSense-url-alias.png)
 And create a firewall rule for it:
 ![pfSense-url-alias.png](https://egregius.be/files/github/pfSense-firewall-rule.png)
-url aliases are only updated twice a day by default. Therefore add a cron job to update it more frequently. I didn't notice any downside of having it running every minute yet.
+url aliases are only updated daily by default. Therefore add a cron job to update it more frequently. I didn't notice any downside of having it running every minute yet.
 ![pfSense-url-alias.png](https://egregius.be/files/github/pfSense-cron.png)
 
 ### 3CX Voip
