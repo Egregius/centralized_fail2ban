@@ -49,3 +49,7 @@ This script fetches to txt file and adds a ip route blackhole for each of them. 
 * * * * * /usr/bin/nice -n20 /path/fail2ban.sh >/dev/null 2>&1
 ```
 ### pfSense
+Add a url alias:
+![pfSense-url-alias.png](https://egregius.be/files/github/pfSense-url-alias.png)
+And create a firewall rule for it:
+![pfSense-url-alias.png](https://egregius.be/files/github/pfSense-firewall-rule.png)
