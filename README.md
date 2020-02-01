@@ -32,10 +32,12 @@ CREATE TABLE `fail2ban` (
 
 ALTER TABLE `fail2ban`
   ADD PRIMARY KEY (`1`,`2`,`3`,`4`);
-COMMIT;```
+COMMIT;
+```
 
 ### Fail2ban action
 Add a second line to your existing ban action, for example:
 ```
 actionban   = ip route add <blocktype> <ip> 
-              curl -s "https://mydomain.com/fail2ban.php?token=FJ3U66DHEK6HUCETkoF6kt9cyrv5sZozCmNyN9CRJsfyFsQsXr&action=add&source=myfirstserver&reason=<name>&ip=<ip>"```
+              curl -s "https://mydomain.com/fail2ban.php?token=FJ3U66DHEK6HUCETkoF6kt9cyrv5sZozCmNyN9CRJsfyFsQsXr&action=add&source=myfirstserver&reason=<name>&ip=<ip>"
+  ```
