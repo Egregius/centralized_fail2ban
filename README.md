@@ -13,6 +13,7 @@ MySQL server
 ## Installation
 ### Database
 Create a table in a database:
+```mysql
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -31,5 +32,5 @@ CREATE TABLE `fail2ban` (
 
 ALTER TABLE `fail2ban`
   ADD PRIMARY KEY (`1`,`2`,`3`,`4`);
-COMMIT;
+COMMIT;```
 
