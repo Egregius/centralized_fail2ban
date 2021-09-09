@@ -17,7 +17,7 @@ while read line
 				IFS=',' read -r -a line <<< "${array[5]}"
 				IPAddressToBan=`echo ${line[0]} | grep -E -o "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"`
 				ip route add blackhole $IPAddressToBan
-				curl -s "https://mydomain.com/fail2ban.php?token=FJ3U66DHEK6HUCETkoF6kt9cyrv5sZozCmNyN9CRJsfyFsQsXr&action=add&source=3CX&reason=3CX-banned&ip=ip=$IPAddressToBan"
+				curl -s "https://mydomain.com/fail2ban.php?token=FJ3U66DHEK6HUCETkoF6kt9cyrv5sZozCmNyN9CRJsfyFsQsXr&action=add&source=3CX&reason=3CX-banned&ip=$IPAddressToBan"
 				echo "$IPAddressToBan blocked."
 			fi
 		fi
