@@ -61,7 +61,6 @@ function create_txt() {
 ';	
 	}
 	header('Content-Type:text/plain');
-	header('Content-Length: ' . strlen($html));
 	header('Content-Transfer-Encoding: binary');
 	header('Cache-Control: must-revalidate');
 	header('Pragma: public');
