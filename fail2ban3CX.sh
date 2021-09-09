@@ -6,7 +6,7 @@ if [ -f $BLOCKED_IP ]; then
 		ip route add blackhole $BLOCKED
 	done < $BLOCKED_IP
 fi
-
+STAMP=$(date +"%Y-%m-%d %R" -d "15 mins ago")
 while read line
 	do
 		IFS='|' read -r -a array <<< "$line"
@@ -21,4 +21,4 @@ while read line
 				echo "$IPAddressToBan blocked."
 			fi
 		fi
-	done < <(cd /tmp; sudo -u phonesystem -H -- psql -d database_single -c "SELECT *  FROM eventlog WHERE eventid in (12290)")
+	done < <(cd /tmp; sudo -u phonesystem -H -- psql -d database_single -c "SELECT *  FROM eventlog WHERE eventid in (12290) AND timegenerated > '$STAMP'")
