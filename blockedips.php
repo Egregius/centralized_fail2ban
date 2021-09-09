@@ -46,6 +46,7 @@ if (isset($_POST['unblock'])) {
 	$ip4=$array[3];
 	$stmt=$db->query("DELETE FROM `fail2ban`.`fail2ban` WHERE `1` = $ip1 AND `2` = $ip2 AND `3` = $ip3 AND `4` = $ip4");
 	$stmt->execute();
+	create_txt();
 }
 	$stmt=$db->query("SELECT `1`, `2`, `3`, `4`, `stamp` FROM `fail2ban`.`fail2ban` ORDER BY 1, 2, 3, 4");
 	while ($row=$stmt->fetch(PDO::FETCH_ASSOC)) $data[]=$row;
@@ -81,3 +82,21 @@ if (isset($_POST['unblock'])) {
 			</tr>
 		</tfoot>
 	</table>';
+function create_txt() {
+	global $db;
+	$html=null;
+	$stmt=$db->query("SELECT `1`, `2`, `3`, `4` from fail2ban order by `1`, `2`, `3`, `4`");
+	while ($i=$stmt->fetch(PDO::FETCH_ASSOC)) {
+		$html.=$i['1'].'.'.$i['2'].'.'.$i['3'].'.'.$i['4'].'/32
+';	
+	}
+	header('Content-Type:text/plain');
+	//header('Content-Length: ' . strlen($html));
+	header('Content-Transfer-Encoding: binary');
+	header('Cache-Control: must-revalidate');
+	header('Pragma: public');
+	file_put_contents('/temp/badips.txt', $html);
+	shell_exec('/usr/bin/aggregate </temp/badips.txt >/var/www/mydomain.be/badips.txt');
+        $URI = $_SERVER['REQUEST_URI'];
+        header("location:$URI");
+}
